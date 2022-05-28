@@ -13,10 +13,11 @@ public class HibernateUserStorage implements UserStorage{
     private SessionFactory sessionFactory;
 
     @Override
-    public void save(User user) {
+    public boolean save(User user) {
         Session session = sessionFactory.openSession();
         session.save(user);
         session.close();
+        return true;
     }
 
     @Override
