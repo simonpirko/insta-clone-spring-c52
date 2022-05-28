@@ -10,7 +10,7 @@ public interface UserStorage {
      * @param user model to save
      * @return saved user model
      */
-    User save(User user);
+    void save(User user);
 
     /**
      * @param login the login
