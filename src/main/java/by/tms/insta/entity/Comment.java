@@ -7,16 +7,14 @@ import javax.persistence.*;
 
 @Data
 @Entity @NoArgsConstructor
-@Table(name = "posts")
-public class Post {
+@Table(name = "comments")
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(cascade = CascadeType.ALL)
+    private Post post;
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
-    @Lob
-    @Column(name = "image", columnDefinition="BLOB")
-    private byte[] image;
-    private String description;
 }
