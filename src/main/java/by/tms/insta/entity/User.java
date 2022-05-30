@@ -19,8 +19,8 @@ public class User {
     private String login;
     private String password;
     @Lob
-    @Column(name = "avatar", columnDefinition="BLOB")
-    private byte[] avatar;
+    @Column(name = "photo", columnDefinition="BLOB")
+    private byte[] photo;
     @ManyToMany
     @JoinTable (name="users",
             joinColumns=@JoinColumn (name="users_id"),
