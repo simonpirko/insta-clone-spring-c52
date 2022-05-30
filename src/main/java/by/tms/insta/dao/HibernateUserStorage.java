@@ -24,12 +24,12 @@ public class HibernateUserStorage implements UserStorage{
     @Override
     public User findUserByLogin(String login) {
         Session session = sessionFactory.openSession();
-        User singleResult = session
+        User userByLogin = session
                 .createQuery("from User where login = :login", User.class)
                 .setParameter("login", login)
                 .getSingleResult();
         session.close();
-        return singleResult;
+        return userByLogin;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class HibernateUserStorage implements UserStorage{
     }
 
     @Override
-    public boolean userIsExisted(User user) {
+    public boolean userExists(User user) {
         Session session = sessionFactory.openSession();
         Query<User> query = session.createQuery("from User where login = :login and password = :password", User.class);
         query.setParameter("login", user.login);
@@ -50,18 +50,5 @@ public class HibernateUserStorage implements UserStorage{
         boolean result = !query.list().isEmpty();
         session.close();
         return result;
-    }
-
-    @Override
-    public boolean authUserByLoginAndPass(User user) {
-        Session session = sessionFactory.openSession();
-        user = session
-                .createQuery("from User where login=:login", User.class)
-                .setParameter("login", user.login).getSingleResult();
-        session.close();
-        if (user.getPassword().equals(password)) {
-            return true;
-        }
-        return false;
     }
 }

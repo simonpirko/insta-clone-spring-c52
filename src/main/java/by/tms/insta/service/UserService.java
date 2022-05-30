@@ -40,10 +40,12 @@ public class UserService {
     }
 
     public boolean authUserByLoginAndPass(User user) {
-        if(authUserByLoginAndPass(user.name)==null){
+        if (!userStorage.userExists(user)) {
             return false;
         }
-        if (!userStorage.authUserByLoginAndPass(user)){
+
+        User userByLogin = findUserByLogin(user);
+        if (userByLogin.password.equals(user.getPassword())) {
             return false;
         }
         return true;
