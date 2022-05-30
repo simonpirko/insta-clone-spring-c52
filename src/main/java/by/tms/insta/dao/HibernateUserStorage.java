@@ -3,6 +3,7 @@ package by.tms.insta.dao;
 import by.tms.insta.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -38,5 +39,29 @@ public class HibernateUserStorage implements UserStorage{
                 .createQuery("from User", User.class).getResultList();
         session.close();
         return resultList;
+    }
+
+    @Override
+    public boolean userIsExisted(User user) {
+        Session session = sessionFactory.openSession();
+        Query<User> query = session.createQuery("from User where login = :login and password = :password", User.class);
+        query.setParameter("login", user.login);
+        query.setParameter("password", user.password);
+        boolean result = !query.list().isEmpty();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public boolean authUserByLoginAndPass(User user) {
+        Session session = sessionFactory.openSession();
+        user = session
+                .createQuery("from User where login=:login", User.class)
+                .setParameter("login", user.login).getSingleResult();
+        session.close();
+        if (user.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
     }
 }

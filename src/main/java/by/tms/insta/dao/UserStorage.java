@@ -22,4 +22,8 @@ public interface UserStorage {
      * @return users list
      */
     List<User> findAll();
+
+    boolean userIsExisted(User user);
+
+    boolean authUserByLoginAndPass(User user);
 }
