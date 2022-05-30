@@ -1,7 +1,7 @@
 package by.tms.insta.controller;
 
 import by.tms.insta.entity.User;
-import by.tms.insta.storages.HibernateUserStorage;
+import by.tms.insta.dao.HibernateUserStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

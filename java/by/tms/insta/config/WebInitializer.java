@@ -1,6 +1,6 @@
-package by.tms.insta;
+package by.tms.insta.config;
 
-import by.tms.insta.WebConfiguration;
+import by.tms.insta.config.WebConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebInitializer extends

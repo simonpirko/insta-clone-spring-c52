@@ -1,4 +1,4 @@
-package by.tms.insta;
+package by.tms.insta.config;
 
 
 import by.tms.insta.interceptors.SecurityInterceptorAuthReg;

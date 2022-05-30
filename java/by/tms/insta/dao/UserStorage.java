@@ -1,4 +1,4 @@
-package by.tms.insta.storages;
+package by.tms.insta.dao;
 
 import by.tms.insta.entity.User;
 
