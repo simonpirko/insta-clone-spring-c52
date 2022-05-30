@@ -4,10 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity @NoArgsConstructor
-@Table(name = "posts")
+@Table(name = "post")
 public class Post {
 
     @Id
@@ -19,4 +20,8 @@ public class Post {
     @Column(name = "image", columnDefinition="BLOB")
     private byte[] image;
     private String description;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Like> likeList;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> commentList;
 }

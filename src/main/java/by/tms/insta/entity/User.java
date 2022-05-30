@@ -25,10 +25,10 @@ public class User {
     @JoinTable (name="users",
             joinColumns=@JoinColumn (name="users_id"),
             inverseJoinColumns=@JoinColumn(name="users_id"))
-    private List<User> folowers;
+    private List<User> followers;
     @ManyToMany
     @JoinTable (name="users",
             joinColumns=@JoinColumn (name="users_id"),
             inverseJoinColumns=@JoinColumn(name="users_id"))
-    private List<User> folowing;
+    private List<User> following;
 }
