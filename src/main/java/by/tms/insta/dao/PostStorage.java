@@ -12,4 +12,20 @@ public interface PostStorage {
     List<Post> findAllPosts();
 
     Post findPostsByUser (User user);
+
+    boolean saveLike(Like like);
+
+    List<Like> findAllLikes();
+
+    Like findLikesByPost (Post post);
+
+    Like findLikesByUser (User user);
+
+    boolean saveComment (Comment comment);
+
+    List<Comment> findAllComments();
+
+    Comment findCommentsByUser (User user);
+
+    Comment findCommentsByPost (Post post);
 }
