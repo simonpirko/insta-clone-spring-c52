@@ -6,12 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
-/**
- * UserService
- *
- * @author Stepan Vasilyeu
- * @since 30.05.2022
- */
 public class UserService {
     private final UserStorage userStorage;
     private final UserValidator userValidator;
@@ -25,7 +19,7 @@ public class UserService {
         if (!userValidator.loginAndNameValidate(user.login, user.name) || !userValidator.passwordValidate(user.password)) {
             return false;
         }
-        if (findUserByLogin(user.login) != null) {
+        if (!userStorage.userExists(user)) {
             return false;
         }
         return userStorage.save(new User());
