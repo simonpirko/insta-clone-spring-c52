@@ -7,14 +7,13 @@ import javax.persistence.*;
 
 @Data
 @Entity @NoArgsConstructor
-@Table(name = "like")
 public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Post post;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 }
