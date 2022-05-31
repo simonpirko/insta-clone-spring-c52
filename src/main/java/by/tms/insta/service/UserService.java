@@ -19,7 +19,7 @@ public class UserService {
         if (!userValidator.loginAndNameValidate(user.login, user.name) || !userValidator.passwordValidate(user.password)) {
             return false;
         }
-        if (!userStorage.userExists(user)) {
+        if (userStorage.userExists(user)) {
             return false;
         }
         return userStorage.save(new User());
