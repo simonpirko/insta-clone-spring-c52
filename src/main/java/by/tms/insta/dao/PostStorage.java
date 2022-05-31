@@ -11,21 +11,21 @@ public interface PostStorage {
 
     List<Post> findAllPosts();
 
-    Post findPostsByUser (User user);
+    List<Post> findPostsByUser(String login);
 
     boolean saveLike(Like like);
 
     List<Like> findAllLikes();
 
-    Like findLikesByPost (Post post);
+    List<Like> findLikesByPost(long id);
 
-    Like findLikesByUser (User user);
+    List<Like> findLikesByUser(String login);
 
     boolean saveComment (Comment comment);
 
     List<Comment> findAllComments();
 
-    Comment findCommentsByUser (User user);
+    List<Comment> findCommentsByUser(String login);
 
-    Comment findCommentsByPost (Post post);
+    List<Comment> findCommentsByPost(long id);
 }
