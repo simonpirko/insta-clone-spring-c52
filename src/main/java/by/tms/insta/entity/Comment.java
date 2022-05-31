@@ -7,14 +7,14 @@ import javax.persistence.*;
 
 @Data
 @Entity @NoArgsConstructor
-@Table(name = "comment")
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    private String commentText;
+    @ManyToOne
     private Post post;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 }

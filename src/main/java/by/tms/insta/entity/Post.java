@@ -8,21 +8,19 @@ import java.util.List;
 
 @Data
 @Entity @NoArgsConstructor
-@Table (name = "users")
-public class User {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String email;
-    private String name;
-    private String login;
-    private String password;
+    @ManyToOne
+    private User user;
     @Lob
     @Column(columnDefinition="BLOB")
-    private byte[] photo;
-    @ManyToMany
-    private List<User> followers;
-    @ManyToMany
-    private List<User> following;
+    private byte[] image;
+    private String description;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Like> likeList;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> commentList;
 }
