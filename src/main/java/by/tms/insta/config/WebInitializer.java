@@ -2,7 +2,12 @@ package by.tms.insta.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+public class WebInitializer extends
+        AbstractAnnotationConfigDispatcherServletInitializer {
+
+
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[0];
@@ -10,11 +15,14 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebConfiguration.class};
+        return new Class[] {WebConfiguration.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/"};
+        return new String[] {"/"};
     }
+
+
+
 }

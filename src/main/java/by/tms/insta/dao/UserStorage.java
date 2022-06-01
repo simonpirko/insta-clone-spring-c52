@@ -23,5 +23,15 @@ public interface UserStorage {
      */
     List<User> findAll();
 
-    boolean userExists (User user);
+
+    /**
+     * @return check existence user
+     */
+    boolean userIsExisted(String login, String password);
+
+    /**
+     * @return check existence user
+     */
+    boolean loginIsExisted(String login);
 }
+
