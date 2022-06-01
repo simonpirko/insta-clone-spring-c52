@@ -13,19 +13,4 @@ public interface PostStorage {
 
     List<Post> findPostsByUser(String login);
 
-    boolean saveLike(Like like);
-
-    List<Like> findAllLikes();
-
-    List<Like> findLikesByPost(long id);
-
-    List<Like> findLikesByUser(String login);
-
-    boolean saveComment (Comment comment);
-
-    List<Comment> findAllComments();
-
-    List<Comment> findCommentsByUser(String login);
-
-    List<Comment> findCommentsByPost(long id);
 }
