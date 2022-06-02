@@ -3,12 +3,13 @@ package by.tms.insta.dao;
 import by.tms.insta.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class HibernateUserStorage implements UserStorage{
+@Repository
+public class HibernateUserStorage implements UserStorage {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -42,13 +43,12 @@ public class HibernateUserStorage implements UserStorage{
     }
 
     @Override
-    public boolean userExists(User user) {
+    public boolean userExists(String login) {
         Session session = sessionFactory.openSession();
-        Query<User> query = session.createQuery("from User where login = :login and password = :password", User.class);
-        query.setParameter("login", user.login);
-        query.setParameter("password", user.password);
-        boolean result = !query.list().isEmpty();
+        Long totalUsers = (Long) session
+                .createQuery("SELECT COUNT(*) FROM User WHERE login = :login")
+                .getSingleResult();
         session.close();
-        return result;
+        return totalUsers > 0;
     }
 }

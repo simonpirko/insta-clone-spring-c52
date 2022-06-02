@@ -3,30 +3,27 @@ package by.tms.insta.service;
 import by.tms.insta.dao.UserStorage;
 import by.tms.insta.entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class UserService {
     private final UserStorage userStorage;
-    private final UserValidator userValidator;
 
-    public UserService(@Qualifier("hibernateUserStorage") UserStorage userStorage, UserValidator userValidator) {
+    public UserService(@Qualifier("hibernateUserStorage") UserStorage userStorage) {
         this.userStorage = userStorage;
-        this.userValidator = userValidator;
     }
 
     public boolean save(User user) {
-        if (!userValidator.loginAndNameValidate(user.login, user.name) || !userValidator.passwordValidate(user.password)) {
-            return false;
-        }
-        if (userStorage.userExists(user)) {
+        if (userStorage.userExists(user.getLogin())) {
             return false;
         }
         return userStorage.save(new User());
     }
 
     public User findUserByLogin(User user) {
-        return userStorage.findUserByLogin(user.login);
+        return userStorage.findUserByLogin(user.getLogin());
     }
 
     public List<User> findAll() {
@@ -34,14 +31,11 @@ public class UserService {
     }
 
     public boolean authUserByLoginAndPass(User user) {
-        if (!userStorage.userExists(user)) {
+        if (!userStorage.userExists(user.getLogin())) {
             return false;
         }
 
         User userByLogin = findUserByLogin(user);
-        if (userByLogin.password.equals(user.getPassword())) {
-            return false;
-        }
-        return true;
+        return userByLogin.getPassword().equals(user.getPassword());
     }
 }
