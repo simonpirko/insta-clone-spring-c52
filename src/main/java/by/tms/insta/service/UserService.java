@@ -16,14 +16,14 @@ public class UserService {
     }
 
     public boolean save(User user) {
-        if (userStorage.userExists(user.getLogin)) {
+        if (userStorage.userExists(user.getLogin())) {
             return false;
         }
         return userStorage.save(new User());
     }
 
     public User findUserByLogin(User user) {
-        return userStorage.findUserByLogin(user.getLogin);
+        return userStorage.findUserByLogin(user.getLogin());
     }
 
     public List<User> findAll() {
@@ -31,14 +31,11 @@ public class UserService {
     }
 
     public boolean authUserByLoginAndPass(User user) {
-        if (!userStorage.userExists(user.getLogin)) {
+        if (!userStorage.userExists(user.getLogin())) {
             return false;
         }
 
         User userByLogin = findUserByLogin(user);
-        if (userByLogin.password.equals(user.getPassword())) {
-            return false;
-        }
-        return true;
+        return userByLogin.getPassword().equals(user.getPassword());
     }
 }
