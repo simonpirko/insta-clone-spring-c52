@@ -42,12 +42,10 @@ public class HibernateUserStorage implements UserStorage{
     }
 
     @Override
-    public boolean userExists(User user) {
+    public boolean userExists(String login) {
         Session session = sessionFactory.openSession();
-        Query<User> query = session.createQuery("from User where login = :login and password = :password", User.class);
-        query.setParameter("login", user.login);
-        query.setParameter("password", user.password);
-        boolean result = !query.list().isEmpty();
+        Query query = session.createQuery("SELECT COUNT(*) FROM User WHERE login = :login");
+        boolean result = ((int) query.list().get(0) > 0) ? true : false;
         session.close();
         return result;
     }

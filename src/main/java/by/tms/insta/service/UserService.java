@@ -8,18 +8,13 @@ import java.util.List;
 
 public class UserService {
     private final UserStorage userStorage;
-    private final UserValidator userValidator;
 
-    public UserService(@Qualifier("hibernateUserStorage") UserStorage userStorage, UserValidator userValidator) {
+    public UserService(@Qualifier("hibernateUserStorage") UserStorage userStorage) {
         this.userStorage = userStorage;
-        this.userValidator = userValidator;
     }
 
     public boolean save(User user) {
-        if (!userValidator.loginAndNameValidate(user.login, user.name) || !userValidator.passwordValidate(user.password)) {
-            return false;
-        }
-        if (userStorage.userExists(user)) {
+        if (userStorage.userExists(user.login)) {
             return false;
         }
         return userStorage.save(new User());
@@ -34,7 +29,7 @@ public class UserService {
     }
 
     public boolean authUserByLoginAndPass(User user) {
-        if (!userStorage.userExists(user)) {
+        if (!userStorage.userExists(user.login)) {
             return false;
         }
 
