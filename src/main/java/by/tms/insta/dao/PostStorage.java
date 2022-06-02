@@ -1,5 +1,7 @@
 package by.tms.insta.dao;
 
+import by.tms.insta.entity.Comment;
+import by.tms.insta.entity.Like;
 import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
 
@@ -11,21 +13,21 @@ public interface PostStorage {
 
     List<Post> findAllPosts();
 
-    List<Post> findPostsByUser(String login);
+    List<Post> findPostsByUser(User user);
 
     boolean saveLike(Like like);
 
     List<Like> findAllLikes();
 
-    List<Like> findLikesByPost(long id);
+    List<Like> findLikesByPost(Post post);
 
-    List<Like> findLikesByUser(String login);
+    List<Like> findLikesByUser(User user);
 
     boolean saveComment (Comment comment);
 
     List<Comment> findAllComments();
 
-    List<Comment> findCommentsByUser(String login);
+    List<Comment> findCommentsByUser(User user);
 
-    List<Comment> findCommentsByPost(long id);
+    List<Comment> findCommentsByPost(Post post);
 }
