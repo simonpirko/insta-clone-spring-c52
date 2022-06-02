@@ -3,9 +3,11 @@ package by.tms.insta.service;
 import by.tms.insta.dao.UserStorage;
 import by.tms.insta.entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class UserService {
     private final UserStorage userStorage;
 
@@ -14,14 +16,14 @@ public class UserService {
     }
 
     public boolean save(User user) {
-        if (userStorage.userExists(user.login)) {
+        if (userStorage.userExists(user.getLogin)) {
             return false;
         }
         return userStorage.save(new User());
     }
 
     public User findUserByLogin(User user) {
-        return userStorage.findUserByLogin(user.login);
+        return userStorage.findUserByLogin(user.getLogin);
     }
 
     public List<User> findAll() {
@@ -29,7 +31,7 @@ public class UserService {
     }
 
     public boolean authUserByLoginAndPass(User user) {
-        if (!userStorage.userExists(user.login)) {
+        if (!userStorage.userExists(user.getLogin)) {
             return false;
         }
 
