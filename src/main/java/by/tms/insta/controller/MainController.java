@@ -4,6 +4,7 @@ import by.tms.insta.dao.PostStorage;
 import by.tms.insta.dao.UserStorage;
 import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
+import by.tms.insta.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,17 +18,17 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    private UserStorage userStorage;
+    private UserService userService;
     @Autowired
-    private PostStorage postStorage;
+    private PostService postService;
 
     @GetMapping
     public String getFollowingsPost (User user, Model model) {
     model.addAttribute("user", user);
-    List<User> userFollowings = userStorage.getFollowings(user);
+    List<User> userFollowings = userService.getFollowings(user);
     List<Post> postFollowings;
     for (User following : userFollowings) {
-        postFollowings = postStorage.findPostsByUser(following);
+        postFollowings = postService.findPostsByUser(following);
         for (Post post : postFollowings) {
             model.addAttribute(post);
         }
