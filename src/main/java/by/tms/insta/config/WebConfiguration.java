@@ -28,6 +28,12 @@ import java.util.Properties;
 @EnableWebMvc
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
+        private static final String DB_DRIVER = "org.postgresql.Driver";
+        private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
+        private static final String DB_USER = "postgres";
+        private static final String DB_PASS = "postgres";
+        private static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
+
     @Autowired
     private SecurityInterceptorExceptAuthReg securityInterceptorExceptAuthReg;
     @Autowired
@@ -46,9 +52,42 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 
     @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan("org.example.calc.entity");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(DB_DRIVER);
+        dataSource.setUrl(DB_URL);
+        dataSource.setUsername(DB_USER);
+        dataSource.setPassword(DB_PASS);
+        return dataSource;
+    }
+
+    private Properties hibernateProperties() {
+        Properties hibernateProperties = new Properties();
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        hibernateProperties.setProperty("hibernate.dialect", HIBERNATE_DIALECT);
+        hibernateProperties.setProperty("hibernate.show_sql", "true");
+        return hibernateProperties;
+    }
+
+    @Bean
+    public PlatformTransactionManager hibernateTransactionManager() {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory().getObject());
+        return transactionManager;
+    }
+
+    @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-//        templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("/pages/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
@@ -69,43 +108,5 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
-    }
-
-    @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("by.tms.insta.entity");
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
-    }
-
-    @Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/insta");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
-        return dataSource;
-    }
-
-    @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager
-                = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
-    }
-
-    private Properties hibernateProperties() {
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty(
-                "hibernate.hbm2ddl.auto", "create-drop");
-        hibernateProperties.setProperty(
-                "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        hibernateProperties.setProperty(
-                "hibernate.show_sql", "true");
-        return hibernateProperties;
     }
 }
