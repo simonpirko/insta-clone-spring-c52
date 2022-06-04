@@ -1,7 +1,6 @@
 package by.tms.insta.controller;
 
-import by.tms.insta.dao.PostStorage;
-import by.tms.insta.dao.UserStorage;
+
 import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
 import by.tms.insta.service.UserService;
@@ -24,15 +23,15 @@ public class MainController {
 
     @GetMapping
     public String getFollowingsPost (User user, Model model) {
-    model.addAttribute("user", user);
-    List<User> userFollowings = userService.getFollowings(user);
-    List<Post> postFollowings;
-    for (User following : userFollowings) {
-        postFollowings = postService.findPostsByUser(following);
-        for (Post post : postFollowings) {
-            model.addAttribute(post);
+        model.addAttribute("user", user);
+        List<User> userFollowings = userService.getFollowings(user);
+        List<Post> postFollowings;
+        for (User following : userFollowings) {
+            postFollowings = postService.findPostsByUser(following);
+            for (Post post : postFollowings) {
+                model.addAttribute(post);
+            }
         }
-    }
         return "index";
     }
 }
