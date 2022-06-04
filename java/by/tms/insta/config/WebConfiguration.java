@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -32,13 +33,15 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Autowired
     SecurityInterceptorAuthReg securityInterceptorAuthReg;
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(securityInterceptorExceptAuthReg)
-                .addPathPatterns("/**").excludePathPatterns("/auth");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/auth")
+                .excludePathPatterns("/registration");
         registry.addInterceptor(securityInterceptorAuthReg)
-                .addPathPatterns("/auth");
+                .addPathPatterns("/auth")
+                .addPathPatterns("/registration");
     }
 
 
@@ -98,7 +101,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-                "hibernate.hbm2ddl.auto", "update");
+                "hibernate.hbm2ddl.auto", "create-drop");
         hibernateProperties.setProperty(
                 "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         hibernateProperties.setProperty(

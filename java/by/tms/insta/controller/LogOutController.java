@@ -7,10 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/logout")
@@ -23,6 +20,6 @@ public class LogOutController {
     public String logout(String name, Model model) {
         httpSession.invalidate();
         model.addAttribute("user", new User());
-        return "auth";
+        return "sign-in";
     }
 }

@@ -6,26 +6,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class HibernateUserStorage implements UserStorage {
 
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public boolean userIsExisted(String login, String password) {
-        Session session = sessionFactory.openSession();
-        Query<User> query = session.createQuery("from User where login = :login" +
-                " and password= :password", User.class);
-        query.setParameter("login", login);
-        query.setParameter("password", password);
-        boolean result = !query.list().isEmpty();
-        session.close();
-        return result;
-    }
 
     @Override
     public boolean save(User user) {
@@ -38,12 +27,12 @@ public class HibernateUserStorage implements UserStorage {
     @Override
     public User findUserByLogin(String login) {
         Session session = sessionFactory.openSession();
-        User singleResult = session
+        User userByLogin = session
                 .createQuery("from User where login = :login", User.class)
                 .setParameter("login", login)
                 .getSingleResult();
         session.close();
-        return singleResult;
+        return userByLogin;
     }
 
     @Override
@@ -53,5 +42,16 @@ public class HibernateUserStorage implements UserStorage {
                 .createQuery("from User", User.class).getResultList();
         session.close();
         return resultList;
+    }
+
+    @Override
+    public boolean userExists(String login) {
+        Session session = sessionFactory.openSession();
+        Long totalUsers = (Long) session
+                .createQuery("SELECT COUNT(*) FROM User WHERE login = :login")
+                .setParameter("login", login)
+                .getSingleResult();
+        session.close();
+        return totalUsers > 0;
     }
 }

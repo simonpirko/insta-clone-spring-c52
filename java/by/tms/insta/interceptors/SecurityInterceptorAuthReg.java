@@ -20,7 +20,7 @@ public class SecurityInterceptorAuthReg implements HandlerInterceptor {
         if (httpSession.getAttribute("user") == null) {
            return true;
         } else {
-                response.sendRedirect(request.getContextPath() + "/mainPage");
+                response.sendRedirect(request.getContextPath() + "/main");
         }
     return false;
     }
