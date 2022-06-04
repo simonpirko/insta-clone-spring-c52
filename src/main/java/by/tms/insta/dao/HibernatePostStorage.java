@@ -55,6 +55,16 @@ public class HibernatePostStorage implements PostStorage {
     }
 
     @Override
+    public boolean likeExists(User user) {
+        Session session = sessionFactory.openSession();
+        Long totalLikes = (Long) session
+                .createQuery("SELECT COUNT(*) FROM Like WHERE user = :user")
+                .getSingleResult();
+        session.close();
+        return totalLikes > 0;
+    }
+
+    @Override
     public List<Like> findAllLikes() {
         Session session = sessionFactory.openSession();
         List<Like> allLikesList = session
