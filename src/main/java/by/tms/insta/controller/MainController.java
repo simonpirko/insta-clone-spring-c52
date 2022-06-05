@@ -3,6 +3,7 @@ package by.tms.insta.controller;
 
 import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
+import by.tms.insta.service.PostService;
 import by.tms.insta.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
