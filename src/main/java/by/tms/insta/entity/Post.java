@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity @NoArgsConstructor
+@Entity
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -16,7 +17,7 @@ public class Post {
     @ManyToOne
     private User user;
     @Lob
-    @Column(columnDefinition="BLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] image;
     private String description;
     @OneToMany(cascade = CascadeType.ALL)

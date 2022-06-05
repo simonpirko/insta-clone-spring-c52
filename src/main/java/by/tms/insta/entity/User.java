@@ -7,10 +7,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity @NoArgsConstructor
-@Table (name = "users")
+@Entity
+@NoArgsConstructor
+@Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -19,10 +19,20 @@ public class User {
     private String login;
     private String password;
     @Lob
-    @Column(columnDefinition="BLOB")
     private byte[] photo;
     @ManyToMany
     private List<User> followers;
     @ManyToMany
     private List<User> following;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
