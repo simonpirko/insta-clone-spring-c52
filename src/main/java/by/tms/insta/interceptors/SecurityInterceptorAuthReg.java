@@ -18,11 +18,11 @@ public class SecurityInterceptorAuthReg implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         if (httpSession.getAttribute("user") == null) {
-           return true;
+            return true;
         } else {
-                response.sendRedirect(request.getContextPath() + "/main");
+            response.sendRedirect(request.getContextPath() + "/main");
         }
-    return false;
+        return false;
     }
 }
 
