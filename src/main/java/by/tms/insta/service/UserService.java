@@ -43,4 +43,8 @@ public class UserService {
         User userByLogin = findUserByLogin(user);
         return userByLogin.getPassword().equals(user.getPassword());
     }
+
+    public List<User> getFollowings(User user) {
+        return userStorage.findUserByLogin(user.getLogin()).getFollowing();
+    }
 }
