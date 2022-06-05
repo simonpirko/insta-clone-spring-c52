@@ -1,5 +1,6 @@
 package by.tms.insta.service;
 
+
 import by.tms.insta.dao.UserStorage;
 import by.tms.insta.entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,11 +31,15 @@ public class UserService {
         return userStorage.findAll();
     }
 
+
+    public boolean userExists(String login) {
+        return userStorage.userExists(login);
+    }
+
     public boolean authUserByLoginAndPass(User user) {
         if (!userStorage.userExists(user.getLogin())) {
             return false;
         }
-
         User userByLogin = findUserByLogin(user);
         return userByLogin.getPassword().equals(user.getPassword());
     }

@@ -23,7 +23,7 @@ public interface PostStorage {
 
     List<Like> findLikesByUser(User user);
 
-    boolean saveComment (Comment comment);
+    boolean saveComment(Comment comment);
 
     List<Comment> findAllComments();
 

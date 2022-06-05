@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
 
 <head>
     <meta charset="UTF-8">
@@ -9,81 +9,92 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="top">
-                <div class="logo">
-                    <img src="../img/instagram.png" alt="instagram" style="width: 175px;">
-                    <h2 class="textReg">Sign up to see photos and videos from your friends.</h2>
+<div class="wrapper">
+    <div class="header">
+        <div class="top">
+            <div class="logo">
+                <img src="../img/instagram.png" alt="instagram" style="width: 175px;">
+                <h2 class="textReg">Sign up to see photos and videos from your friends.</h2>
+            </div>
+            <div class="dif">
+                <div class="fb">
+                    <div class="btn">
+                        <a href="#"> Log in with Facebook</a>
+                    </div>
                 </div>
-                <div class="dif">
-                    <div class="fb">
-                        <div class="btn">
-                            <a href="#"> Log in with Facebook</a>
-                        </div>
-                    </div>
-                    <div class="or">
-                        <div class="line"></div>
-                        <p>OR</p>
-                        <div class="line"></div>
-                    </div>
-                    <div class="form">
+                <div class="or">
+                    <div class="line"></div>
+                    <p>OR</p>
+                    <div class="line"></div>
+                </div>
+                <div class="form">
+
+                    <form th:action="@{/registration}" th:object="${user}" method="post">
                         <div class="input_field">
-                            <input type="text" placeholder="Phone number or email" class="input">
+                            <input type="text" th:field="*{email}" placeholder="Phone number or email"
+                                   class="input">
                         </div>
                         <div class="input_field">
-                            <input type="text" placeholder="Full Name" class="input">
+                            <input type="text" th:field="*{name}" placeholder="Full Name" class="input">
                         </div>
                         <div class="input_field">
-                            <input type="text" placeholder="Username" class="input">
+                            <input type="text" th:field="*{login}" placeholder="Username" class="input">
                         </div>
                         <div class="input_field">
-                            <input type="password" placeholder="Password" class="input">
+                            <input type="password" th:field="*{password}" placeholder="Password" class="input">
                         </div>
                         <p class="textRule">People who use our service may have uploaded your contact information to
                             Instagram. Learn More
 
                             By signing up, you agree to our Terms , Data Policy and Cookies Policy .
                         </p>
-                        <div class="btn"><a href="#">Registration</a></div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="signup">
-                <p>Have an account? <a href="/sign-in.html">Log in</a></p>
-            </div>
-            <div class="apps">
-                <p>Get the app.</p>
-                <div class="icons">
-                    <a href="#"><img src="../img/appstore.png" alt="appstore"></a>
-                    <a href="#"><img src="../img/googleplay.png" alt="googleplay"></a>
+                        <button class="btn">Registration</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div class="links">
-                <ul>
-                    <li><a href="#">ABOUT US</a></li>
-                    <li><a href="#">SUPPORT</a></li>
-                    <li><a href="#">PRESS</a></li>
-                    <li><a href="#">API</a></li>
-                    <li><a href="#">JOBS</a></li>
-                    <li><a href="#">PRIVACY</a></li>
-                    <li><a href="#">TERMS</a></li>
-                    <li><a href="#">DIRECTORY</a></li>
-                    <li><a href="#">PROFILES</a></li>
-                    <li><a href="#">HASHTAGS</a></li>
-                    <li><a href="#">LANGUAGE</a></li>
-                </ul>
-            </div>
-            <div class="copyright">
-                © 2022 INSTAGRAM
+
+        <p th:if="!${#strings.isEmpty(message)}" th:text="${message}"></p>
+        <p th:if="!${#lists.isEmpty(messages)}">Problems with registration:</p>
+        <table th:if="!${#lists.isEmpty(messages)}" th:each="messageError:${messages}">
+            <tr>
+                <td>
+                    <p th:text="${messageError}"></p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="signup">
+            <p>Have an account? <a href="auth">Log in</a></p>
+        </div>
+        <div class="apps">
+            <p>Get the app.</p>
+            <div class="icons">
+                <a href="#"><img src="../img/appstore.png" alt="appstore"></a>
+                <a href="#"><img src="../img/googleplay.png" alt="googleplay"></a>
             </div>
         </div>
     </div>
-
-
+    <div class="footer">
+        <div class="links">
+            <ul>
+                <li><a href="#">ABOUT US</a></li>
+                <li><a href="#">SUPPORT</a></li>
+                <li><a href="#">PRESS</a></li>
+                <li><a href="#">API</a></li>
+                <li><a href="#">JOBS</a></li>
+                <li><a href="#">PRIVACY</a></li>
+                <li><a href="#">TERMS</a></li>
+                <li><a href="#">DIRECTORY</a></li>
+                <li><a href="#">PROFILES</a></li>
+                <li><a href="#">HASHTAGS</a></li>
+                <li><a href="#">LANGUAGE</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2022 INSTAGRAM
+        </div>
+    </div>
+</div>
 </body>
-
 </html>
