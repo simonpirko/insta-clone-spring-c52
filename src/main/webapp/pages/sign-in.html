@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Instagram Login Page</title>
-    <link rel="stylesheet" href="../style/style.css">
-    <link rel="shortcut icon" href="../img/instic.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/style/style.css">
+    <link rel="shortcut icon" href="/static/img/instic.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     <div class="header">
         <div class="top">
             <div class="logo">
-                <img src="../img/instagram.png" alt="instagram" style="width: 175px;">
+                <img src="/static/img/instagram.png" alt="instagram" style="width: 175px;">
             </div>
             <div class="form">
                 <form th:action="@{/auth}" th:object="${user}" method="post">
@@ -51,7 +51,7 @@
             </div>
             <div class="dif">
                 <div class="fb">
-                    <img src="../img/facebook.png" alt="facebook">
+                    <img src="/static/img/facebook.png" alt="facebook">
                     <p>Log in with Facebook</p>
                 </div>
                 <div class="forgot">
@@ -65,8 +65,8 @@
         <div class="apps">
             <p>Get the app.</p>
             <div class="icons">
-                <a href="#"><img src="../img/appstore.png" alt="appstore"></a>
-                <a href="#"><img src="../img/googleplay.png" alt="googleplay"></a>
+                <a href="#"><img src="/static/img/appstore.png" alt="appstore"></a>
+                <a href="#"><img src="/static/img/googleplay.png" alt="googleplay"></a>
             </div>
         </div>
     </div>
