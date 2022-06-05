@@ -29,7 +29,7 @@ import java.util.Properties;
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private static final String DB_DRIVER = "org.postgresql.Driver";
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/insta";
     private static final String DB_USER = "postgres";
     private static final String DB_PASS = "postgres";
     private static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
