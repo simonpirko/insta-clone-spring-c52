@@ -17,6 +17,8 @@ public interface PostStorage {
 
     boolean saveLike(Like like);
 
+    boolean likeExists(User user);
+
     List<Like> findAllLikes();
 
     List<Like> findLikesByPost(Post post);
