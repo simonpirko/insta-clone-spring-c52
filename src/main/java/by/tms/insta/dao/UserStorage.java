@@ -23,5 +23,7 @@ public interface UserStorage {
      */
     List<User> findAll();
 
-    boolean userExists (String login);
+    boolean userExists(String login);
+//
+//    List<User> getFollowings(User user);
 }

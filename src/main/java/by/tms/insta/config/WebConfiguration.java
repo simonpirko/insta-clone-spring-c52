@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -19,11 +20,12 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = "by.tms.insta")
+@EnableTransactionManagement
 @EnableWebMvc
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private static final String DB_DRIVER = "org.postgresql.Driver";
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/insta";
     private static final String DB_USER = "postgres";
     private static final String DB_PASS = "postgres";
     private static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
@@ -32,7 +34,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("org.example.calc.entity");
+        sessionFactory.setPackagesToScan("by.tms.insta.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
