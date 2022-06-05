@@ -1,12 +1,13 @@
 package by.tms.insta.controller;
 
 import by.tms.insta.entity.User;
-import by.tms.insta.dao.HibernateUserStorage;
 import by.tms.insta.service.UserService;
+import by.tms.insta.validators.UserDataValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ import java.util.List;
 public class AuthController {
 
     private static final String USER_DO_NOT_EXIST =
-            "The username you entered does not belong to an account." +
+            "The username you entered does not belong to an account. " +
                     "Check your username and try again.";
 
     private static final String PASSWORD_DO_NOT_EXIST = "Sorry, you entered the wrong password." +
@@ -36,6 +37,8 @@ public class AuthController {
     HttpSession httpSession;
     @Autowired
     UserService userservice;
+    @Autowired
+    UserDataValidator userDataValidator;
 
     @GetMapping
     public String auth(String name, Model model) {
@@ -48,14 +51,8 @@ public class AuthController {
                        Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         model.addAttribute(user);
 
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> allErrors = bindingResult.getAllErrors();
-            List<String> listMessage = new ArrayList<>();
-            for (ObjectError a : allErrors) {
-                listMessage.add(a.getDefaultMessage());
-            }
-            while (listMessage.remove("не должно быть пустым")) ;
-            model.addAttribute("messages", listMessage);
+        if (userDataValidator.hasAuthError(bindingResult)) {
+            model.addAttribute("messages", userDataValidator.listErrorForAuth( bindingResult));
             return "sign-in";
         } else {
             if (userservice.authUserByLoginAndPass(user)) {
