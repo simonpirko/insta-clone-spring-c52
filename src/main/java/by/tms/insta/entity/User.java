@@ -1,15 +1,17 @@
 package by.tms.insta.entity;
 
-        import lombok.Data;
-        import lombok.NoArgsConstructor;
-        import javax.persistence.*;
-        import javax.validation.constraints.NotBlank;
-        import java.util.List;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @Entity
 @NoArgsConstructor
-//@Table(name = "users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,6 @@ public class User {
     private String login;
     @NotBlank(message = "Password must not be empty")
     private String password;
-
     @Lob
     private byte[] photo;
     @ManyToMany

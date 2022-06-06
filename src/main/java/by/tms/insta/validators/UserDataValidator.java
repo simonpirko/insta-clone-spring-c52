@@ -11,8 +11,6 @@ import java.util.List;
 @Component
 public class UserDataValidator {
 
-
-
     private static final String NOT_EMAIL_OR_PHONE = "The expression you entered is not email" +
             " or phone number";
 
