@@ -5,6 +5,7 @@ import by.tms.insta.entity.Comment;
 import by.tms.insta.entity.Like;
 import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class PostService {
     private final PostStorage postStorage;
 
+    @Autowired
     public PostService(@Qualifier("hibernatePostStorage") PostStorage postStorage) {
         this.postStorage = postStorage;
     }
@@ -24,6 +26,10 @@ public class PostService {
 
     public List<Post> findAllPosts(){
         return postStorage.findAllPosts();
+    }
+
+    public List<Post> findPostsByUser(User user){
+        return postStorage.findPostsByUser(user);
     }
 
     public boolean saveLike(Like like){
