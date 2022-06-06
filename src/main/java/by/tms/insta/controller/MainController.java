@@ -26,7 +26,7 @@ public class MainController {
     private PostService postService;
 
     @GetMapping
-    public String getFollowingsPost (User user, Model model) {
+    public String getFollowingsPost(User user, Model model) {
         model.addAttribute("user", user);
         List<User> userFollowings = userService.getFollowings(user);
         List<Post> postFollowings;
@@ -40,12 +40,12 @@ public class MainController {
     }
 
     @PostMapping
-    public Comment createComment (Comment comment) {
+    public Comment createComment(Comment comment) {
         return postService.saveComment(comment);
     }
 
     @PostMapping
-    public Like createLike (Like like) {
+    public Like createLike(Like like) {
         return postService.saveLike(like);
     }
 }
