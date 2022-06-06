@@ -39,12 +39,14 @@ public class MainController {
     }
 
     @PostMapping
-    public Comment createComment (Comment comment) {
-        return postService.saveComment(comment);
+    public String createComment(Comment comment, Model model) {
+        model.addAttribute("comment", comment);
+        return "index";
     }
 
     @PostMapping
-    public Like createLike (Like like) {
-        return postService.saveLike(like);
+    public String createLike(Like like, Model model) {
+        model.addAttribute("like", like);
+        return "index";
     }
 }
