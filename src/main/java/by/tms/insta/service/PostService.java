@@ -51,8 +51,8 @@ public class PostService {
         return postStorage.findLikesByUser(user);
     }
 
-    public boolean saveComment(){
-        return postStorage.saveComment(new Comment());
+    public boolean saveComment(Comment comment){
+        return postStorage.saveComment(comment);
     }
 
     public List<Comment> findAllComments(){

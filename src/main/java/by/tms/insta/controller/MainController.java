@@ -40,12 +40,12 @@ public class MainController {
     }
 
     @PostMapping
-    public Comment createComment(Comment comment) {
+    public boolean createComment(Comment comment) {
         return postService.saveComment(comment);
     }
 
     @PostMapping
-    public Like createLike(Like like) {
+    public boolean createLike(Like like) {
         return postService.saveLike(like);
     }
 }
