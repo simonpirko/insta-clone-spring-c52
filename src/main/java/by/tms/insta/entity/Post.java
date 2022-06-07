@@ -16,7 +16,6 @@ public class Post {
     @ManyToOne
     private User user;
     @Lob
-    @Column(columnDefinition="BLOB")
     private byte[] image;
     private String description;
     @OneToMany(cascade = CascadeType.ALL)
