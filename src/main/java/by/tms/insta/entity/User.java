@@ -1,5 +1,6 @@
 package by.tms.insta.entity;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity @NoArgsConstructor
-@Table (name = "users")
+@Entity
+@NoArgsConstructor
+@Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -26,9 +27,9 @@ public class User {
     private String password;
     @Lob
     private byte[] photo;
-    @ManyToMany (cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Follower> followers;
-    @ManyToMany (cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Follower> following;
 
     public List<Follower> getFollowers() {

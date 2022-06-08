@@ -4,10 +4,12 @@ import by.tms.insta.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class HibernateUserStorage implements UserStorage{
+@Repository
+public class HibernateUserStorage implements UserStorage {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -23,12 +25,12 @@ public class HibernateUserStorage implements UserStorage{
     @Override
     public User findUserByLogin(String login) {
         Session session = sessionFactory.openSession();
-        User singleResult = session
+        User userByLogin = session
                 .createQuery("from User where login = :login", User.class)
                 .setParameter("login", login)
                 .getSingleResult();
         session.close();
-        return singleResult;
+        return userByLogin;
     }
 
     @Override
@@ -38,5 +40,16 @@ public class HibernateUserStorage implements UserStorage{
                 .createQuery("from User", User.class).getResultList();
         session.close();
         return resultList;
+    }
+
+    @Override
+    public boolean userExists(String login) {
+        Session session = sessionFactory.openSession();
+        Long totalUsers = (Long) session
+                .createQuery("SELECT COUNT(*) FROM User WHERE login = :login")
+                .setParameter("login", login)
+                .getSingleResult();
+        session.close();
+        return totalUsers > 0;
     }
 }

@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity @NoArgsConstructor
+@Entity
+@NoArgsConstructor
 public class Post {
 
     @Id
