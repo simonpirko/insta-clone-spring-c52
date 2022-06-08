@@ -59,7 +59,7 @@ public class AuthController {
                 user = userservice.findUserByLogin(user);
                 model.addAttribute(user);
                 httpSession.setAttribute("user", user);
-                response.sendRedirect(request.getContextPath() + "/main");
+                response.sendRedirect(request.getContextPath() + "/");
             } else if (userservice.userExists(user.getLogin())) {
                 model.addAttribute("message", PASSWORD_DO_NOT_EXIST);
                 return "sign-in";

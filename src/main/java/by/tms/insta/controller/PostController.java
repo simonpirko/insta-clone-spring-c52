@@ -25,6 +25,6 @@ public class PostController {
     @PostMapping
     public String savePost(Post post) {
         postService.savePost(post);
-        return "redirect:/main";
+        return "redirect:/";
     }
 }
