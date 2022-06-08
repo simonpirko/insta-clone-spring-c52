@@ -47,6 +47,7 @@ public class HibernateUserStorage implements UserStorage {
         Session session = sessionFactory.openSession();
         Long totalUsers = (Long) session
                 .createQuery("SELECT COUNT(*) FROM User WHERE login = :login")
+                .setParameter("login", login)
                 .getSingleResult();
         session.close();
         return totalUsers > 0;

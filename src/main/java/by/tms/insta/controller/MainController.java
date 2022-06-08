@@ -3,6 +3,7 @@ package by.tms.insta.controller;
 
 import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
+import by.tms.insta.service.PostService;
 import by.tms.insta.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,16 +23,17 @@ public class MainController {
     private PostService postService;
 
     @GetMapping
-    public String getFollowingsPost (User user, Model model) {
+    public String getFollowingsPost(User user, Model model) {
         model.addAttribute("user", user);
-        List<User> userFollowings = userService.getFollowings(user);
-        List<Post> postFollowings;
-        for (User following : userFollowings) {
-            postFollowings = postService.findPostsByUser(following);
-            for (Post post : postFollowings) {
-                model.addAttribute(post);
-            }
-        }
+        // TODO due to changed enities new logics must be created
+//        List<User> userFollowings = userService.getFollowings(user);
+//        List<Post> postFollowings;
+//        for (User following : userFollowings) {
+//            postFollowings = postService.findPostsByUser(following);
+//            for (Post post : postFollowings) {
+//                model.addAttribute(post);
+//            }
+//        }
         return "index";
     }
 }
