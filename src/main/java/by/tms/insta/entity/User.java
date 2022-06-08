@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,19 +27,16 @@ public class User {
     private String password;
     @Lob
     private byte[] photo;
-    @ManyToMany
-    private List<User> followers;
-    @ManyToMany
-    private List<User> following;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Follower> followers;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Follower> following;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public List<Follower> getFollowers() {
+        return new ArrayList<>();
+    }
+
+    public List<Follower> getFollowing() {
+        return new ArrayList<>();
     }
 }
