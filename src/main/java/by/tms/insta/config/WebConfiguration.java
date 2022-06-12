@@ -1,13 +1,18 @@
 package by.tms.insta.config;
 
+import by.tms.insta.interceptors.SecurityInterceptorAuthReg;
+import by.tms.insta.interceptors.SecurityInterceptorExceptAuthReg;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -19,20 +24,37 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = "by.tms.insta")
+@EnableTransactionManagement
 @EnableWebMvc
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private static final String DB_DRIVER = "org.postgresql.Driver";
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/insta";
     private static final String DB_USER = "postgres";
     private static final String DB_PASS = "postgres";
     private static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
+
+    @Autowired
+    private SecurityInterceptorExceptAuthReg securityInterceptorExceptAuthReg;
+    @Autowired
+    SecurityInterceptorAuthReg securityInterceptorAuthReg;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(securityInterceptorExceptAuthReg)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/auth")
+                .excludePathPatterns("/registration");
+        registry.addInterceptor(securityInterceptorAuthReg)
+                .addPathPatterns("/auth")
+                .addPathPatterns("/registration");
+    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("org.example.calc.entity");
+        sessionFactory.setPackagesToScan("by.tms.insta.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

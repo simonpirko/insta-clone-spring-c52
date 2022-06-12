@@ -17,13 +17,15 @@ public interface PostStorage {
 
     boolean saveLike(Like like);
 
+    boolean likeExists(User user);
+
     List<Like> findAllLikes();
 
     List<Like> findLikesByPost(Post post);
 
     List<Like> findLikesByUser(User user);
 
-    boolean saveComment (Comment comment);
+    boolean saveComment(Comment comment);
 
     List<Comment> findAllComments();
 

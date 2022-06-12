@@ -8,13 +8,13 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-public class Like {
+@Table(name = "followers")
+public class Follower {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne
-    private Post post;
-    @ManyToOne
-    private User user;
+    private String name;
+    @Lob
+    private byte[] photo;
 }

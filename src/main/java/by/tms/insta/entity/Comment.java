@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@Entity @NoArgsConstructor
+@Entity
+@NoArgsConstructor
 public class Comment {
 
     @Id
