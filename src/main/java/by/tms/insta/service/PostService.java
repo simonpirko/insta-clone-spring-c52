@@ -24,6 +24,13 @@ public class PostService {
         return postStorage.savePost(new Post());
     }
 
+    public boolean deletePost(Post post){
+        if (postStorage.postExists(post.getUser())){
+            return postStorage.deletePost(post);
+        }
+        return false;
+    }
+
     public List<Post> findAllPosts(){
         return postStorage.findAllPosts();
     }
@@ -37,6 +44,13 @@ public class PostService {
             return false;
         }
         return postStorage.saveLike(new Like());
+    }
+
+    public boolean deleteLike(Like like){
+        if (postStorage.likeExists(like.getUser())){
+            return postStorage.deleteLike(like);
+        }
+        return false;
     }
 
     public List<Like> findAllLikes(){
@@ -53,6 +67,13 @@ public class PostService {
 
     public boolean saveComment(){
         return postStorage.saveComment(new Comment());
+    }
+
+    public boolean deleteComment(Comment comment){
+        if (postStorage.commentExists(comment.getUser())){
+            return postStorage.deleteComment(comment);
+        }
+        return false;
     }
 
     public List<Comment> findAllComments(){

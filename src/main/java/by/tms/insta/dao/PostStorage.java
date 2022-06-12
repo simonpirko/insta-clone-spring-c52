@@ -11,11 +11,17 @@ public interface PostStorage {
 
     boolean savePost(Post post);
 
+    boolean deletePost(Post post);
+
+    boolean postExists(User user);
+
     List<Post> findAllPosts();
 
     List<Post> findPostsByUser(User user);
 
     boolean saveLike(Like like);
+
+    boolean deleteLike(Like like);
 
     boolean likeExists(User user);
 
@@ -26,6 +32,10 @@ public interface PostStorage {
     List<Like> findLikesByUser(User user);
 
     boolean saveComment (Comment comment);
+
+    boolean deleteComment(Comment comment);
+
+    boolean commentExists(User user);
 
     List<Comment> findAllComments();
 

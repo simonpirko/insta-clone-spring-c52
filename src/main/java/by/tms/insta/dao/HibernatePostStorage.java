@@ -26,6 +26,24 @@ public class HibernatePostStorage implements PostStorage {
     }
 
     @Override
+    public boolean deletePost(Post post) {
+        Session session = sessionFactory.openSession();
+        session.delete(post);
+        session.close();
+        return true;
+    }
+
+    @Override
+    public boolean postExists(User user) {
+        Session session = sessionFactory.openSession();
+        Long totalPosts = (Long) session
+                .createQuery("SELECT COUNT(*) FROM Post WHERE user = :user")
+                .getSingleResult();
+        session.close();
+        return totalPosts > 0;
+    }
+
+    @Override
     public List<Post> findAllPosts() {
         Session session = sessionFactory.openSession();
         List<Post> allPostsList = session
@@ -50,6 +68,14 @@ public class HibernatePostStorage implements PostStorage {
     public boolean saveLike(Like like) {
         Session session = sessionFactory.openSession();
         session.save(like);
+        session.close();
+        return true;
+    }
+
+    @Override
+    public boolean deleteLike(Like like) {
+        Session session = sessionFactory.openSession();
+        session.delete(like);
         session.close();
         return true;
     }
@@ -102,6 +128,24 @@ public class HibernatePostStorage implements PostStorage {
         session.save(comment);
         session.close();
         return true;
+    }
+
+    @Override
+    public boolean deleteComment(Comment comment) {
+        Session session = sessionFactory.openSession();
+        session.delete(comment);
+        session.close();
+        return true;
+    }
+
+    @Override
+    public boolean commentExists(User user) {
+        Session session = sessionFactory.openSession();
+        Long totalComments = (Long) session
+                .createQuery("SELECT COUNT(*) FROM Comment WHERE user = :user")
+                .getSingleResult();
+        session.close();
+        return totalComments > 0;
     }
 
     @Override
