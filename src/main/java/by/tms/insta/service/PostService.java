@@ -8,6 +8,7 @@ import by.tms.insta.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,8 +21,9 @@ public class PostService {
         this.postStorage = postStorage;
     }
 
+    @Transactional
     public boolean savePost(Post post){
-        return postStorage.savePost(new Post());
+        return postStorage.savePost(post);
     }
 
     public List<Post> findAllPosts(){

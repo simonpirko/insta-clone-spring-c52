@@ -113,8 +113,10 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
-    @Bean
-    public MultipartResolver multipartResolver() {
-        return new CommonsMultipartResolver();
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(10000000);
+        return multipartResolver;
     }
 }
