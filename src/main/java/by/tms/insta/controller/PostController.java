@@ -1,5 +1,7 @@
 package by.tms.insta.controller;
 
+import by.tms.insta.entity.Comment;
+import by.tms.insta.entity.Like;
 import by.tms.insta.entity.Post;
 import by.tms.insta.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,30 @@ public class PostController {
     @GetMapping
     public String getPost() {
         return "post";
+    }
+
+    @PostMapping("/createComment")
+    public String saveComment(Comment comment) {
+        postService.saveComment(comment);
+        return "redirect:/";
+    }
+
+    @PostMapping("/deleteComment")
+    public String deleteComment(Comment comment) {
+//        postService.deleteComment(comment);
+        return "redirect:/";
+    }
+
+    @PostMapping("/createLike")
+    public String saveLike(Like like) {
+        postService.saveLike(like);
+        return "redirect:/";
+    }
+
+    @PostMapping("/deleteLike")
+    public String deleteLike(Like like) {
+//        postService.deleteLike(like);
+        return "redirect:/";
     }
 
     @PostMapping(consumes = "multipart/form-data")
