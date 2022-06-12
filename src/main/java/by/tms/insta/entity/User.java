@@ -1,12 +1,14 @@
+
 package by.tms.insta.entity;
 
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,16 +29,31 @@ public class User {
     private String password;
     @Lob
     private byte[] photo;
-    @ManyToMany(cascade = CascadeType.ALL)
+
+    @OneToOne (cascade = CascadeType.ALL)
+    Follower follower = new Follower();
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany (cascade = CascadeType.ALL)
     private List<Follower> followers;
-    @ManyToMany(cascade = CascadeType.ALL)
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany (cascade = CascadeType.ALL)
     private List<Follower> following;
 
-    public List<Follower> getFollowers() {
-        return new ArrayList<>();
+    public void setLogin(String login) {
+        this.login = login;
+        follower.setName(login);
     }
 
-    public List<Follower> getFollowing() {
-        return new ArrayList<>();
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+        follower.setPhoto(photo);
+    }
+
+    public void setFollower(Follower follower) {
+        follower.setName(this.login);
+        follower.setPhoto(this.photo);
+        this.follower = follower;
     }
 }
