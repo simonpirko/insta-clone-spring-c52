@@ -24,16 +24,9 @@ public class MainController {
 
     @GetMapping
     public String getFollowingsPost(User user, Model model) {
-        model.addAttribute("user", user);
-        // TODO due to changed enities new logics must be created
 //        List<User> userFollowings = userService.getFollowings(user);
-//        List<Post> postFollowings;
-//        for (User following : userFollowings) {
-//            postFollowings = postService.findPostsByUser(following);
-//            for (Post post : postFollowings) {
-//                model.addAttribute(post);
-//            }
-//        }
+        List<Post> postFollowings = postService.findAllPosts();
+        model.addAttribute("posts", postFollowings);
         return "index";
     }
 }
