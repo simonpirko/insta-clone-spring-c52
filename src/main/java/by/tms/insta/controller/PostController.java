@@ -3,6 +3,7 @@ package by.tms.insta.controller;
 import by.tms.insta.entity.Comment;
 import by.tms.insta.entity.Like;
 import by.tms.insta.entity.Post;
+import by.tms.insta.entity.User;
 import by.tms.insta.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -56,17 +58,17 @@ public class PostController {
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public String savePost(@RequestParam(value = "image") MultipartFile image) {
+    public String savePost(@RequestParam(value = "image") MultipartFile image,
+                           HttpServletRequest request) {
         Post newPost = new Post();
         try {
             newPost.setImage(image.getBytes());
         } catch (IOException e){
             return "post";
         }
-//        User sessionUser = (User) httpSession.getAttribute("user");
-//        newPost.setUser(user);
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        newPost.setUser(sessionUser);
         postService.savePost(newPost);
-        System.out.println(postService.findAllPosts());
         return "redirect:/";
     }
 }
