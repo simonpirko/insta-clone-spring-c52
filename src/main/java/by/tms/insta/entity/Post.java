@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -28,4 +29,14 @@ public class Post {
     private List<Like> likeList;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> commentList;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", user=" + user +
+                ", image=" + Arrays.toString(image) +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

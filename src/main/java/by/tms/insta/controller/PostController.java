@@ -59,15 +59,17 @@ public class PostController {
 
     @PostMapping(consumes = "multipart/form-data")
     public String savePost(@RequestParam(value = "image") MultipartFile image,
+                           String description,
                            HttpServletRequest request) {
         Post newPost = new Post();
         try {
             newPost.setImage(image.getBytes());
-        } catch (IOException e){
+        } catch (IOException e) {
             return "post";
         }
         User sessionUser = (User) request.getSession().getAttribute("user");
         newPost.setUser(sessionUser);
+        newPost.setDescription(description);
         postService.savePost(newPost);
         return "redirect:/";
     }
