@@ -33,8 +33,8 @@ public class AuthController {
             "Check your password again.";
 
 
-    @Autowired
-    HttpSession httpSession;
+//    @Autowired
+//    HttpSession httpSession;
     @Autowired
     UserService userservice;
     @Autowired
@@ -58,7 +58,8 @@ public class AuthController {
             if (userservice.authUserByLoginAndPass(user)) {
                 user = userservice.findUserByLogin(user);
                 model.addAttribute(user);
-                httpSession.setAttribute("user", user);
+                request.getSession().setAttribute("user", user);
+//                httpSession.setAttribute("user", user);
                 response.sendRedirect(request.getContextPath() + "/");
             } else if (userservice.userExists(user.getLogin())) {
                 model.addAttribute("message", PASSWORD_DO_NOT_EXIST);
