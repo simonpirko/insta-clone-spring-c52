@@ -2,6 +2,8 @@ package by.tms.insta.dao;
 
 import by.tms.insta.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface UserStorage {
@@ -24,6 +26,13 @@ public interface UserStorage {
     List<User> findAll();
 
     boolean userExists(String login);
-//
-//    List<User> getFollowings(User user);
+
+    void addFollower(User userFollower, User user);
+
+    void update(String login, User newUser,
+                HttpServletRequest request, HttpServletResponse response);
+
+    void deleteFollower(User userFollower, User user);
+
 }
+
