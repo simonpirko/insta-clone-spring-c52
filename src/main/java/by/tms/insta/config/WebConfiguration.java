@@ -11,9 +11,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -22,7 +20,6 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
-import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -46,12 +43,13 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(securityInterceptorExceptAuthReg)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/auth")
-                .excludePathPatterns("/registration");
+                .addPathPatterns("/**" )
+                .excludePathPatterns("/auth","/static/**")
+                .excludePathPatterns("/registration","/static/**");
         registry.addInterceptor(securityInterceptorAuthReg)
-                .addPathPatterns("/auth")
-                .addPathPatterns("/registration");
+                .addPathPatterns("/auth","/static/**")
+                .addPathPatterns("/registration","/static/**");
+
     }
 
     @Bean
