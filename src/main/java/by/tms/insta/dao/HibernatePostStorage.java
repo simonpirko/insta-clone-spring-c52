@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
@@ -21,6 +23,7 @@ public class HibernatePostStorage implements PostStorage {
     @Override
     public boolean savePost(Post post) {
         Session session = sessionFactory.openSession();
+        post.setDateTime(ZonedDateTime.now());
         session.save(post);
         session.close();
         return true;
@@ -126,6 +129,7 @@ public class HibernatePostStorage implements PostStorage {
     @Override
     public boolean saveComment(Comment comment) {
         Session session = sessionFactory.openSession();
+        comment.setDateTime(ZonedDateTime.now());
         session.save(comment);
         session.close();
         return true;

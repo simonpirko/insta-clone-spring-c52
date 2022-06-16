@@ -425,6 +425,7 @@
         <p class="author-login" th:text="${post.getUser().getLogin()}"></p>
         <img class='content' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(post.getImage())}" width="300px"/>
         <p class="description" th:text="${post.getDescription()}"></p>
+        <small class="date-stamp" th:text="${post.getDateTime()}"></small>
     </div>
 
 
