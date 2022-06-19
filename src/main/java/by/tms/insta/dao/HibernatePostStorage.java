@@ -1,17 +1,17 @@
 package by.tms.insta.dao;
 
-import by.tms.insta.entity.Comment;
-import by.tms.insta.entity.Like;
-import by.tms.insta.entity.Post;
-import by.tms.insta.entity.User;
+import by.tms.insta.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -184,4 +184,76 @@ public class HibernatePostStorage implements PostStorage {
         session.close();
         return allCommentsByPost;
     }
+
+    @Override
+    public List<BigInteger> getListIdPosts(User user) {
+        Session session = sessionFactory.openSession();
+        List<BigInteger> result = new ArrayList<>();
+        user = session.get(User.class, user.getId());
+
+        for (Follower follower : user.getFollowing()) {
+            List<BigInteger> idPostOneFollowing = session.createSQLQuery(
+                            "select ID from POST p where p.USER_ID = :id")
+                    .setParameter("id", follower.getId()).list();
+            result.addAll(idPostOneFollowing);
+        }
+        session.close();
+        Collections.sort(result);
+        Collections.reverse(result);
+        return result;
+    }
+
+    @Override
+    public int getCountPosts(User user) {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        user = session.get(User.class, user.getId());
+        for (Follower follower : user.getFollowing()) {
+            String box = String.valueOf(session.createSQLQuery(
+                            "select COUNT(*) from POST p where p.USER_ID = :id")
+                    .setParameter("id", follower.getId()).getSingleResult());
+            result = result + Integer.parseInt(box);
+        }
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<Post> getPostListForOnePage(User user, int pressedButton) {
+        Session session = sessionFactory.openSession();
+        List<Post> listPostForOnePage = new ArrayList<>();
+        List<BigInteger> idPostAllFollowing = getListIdPosts(user);
+        int countPosts = getCountPosts(user);
+        if ((countPosts - (pressedButton-1) * 10) > 9) {
+            for (int i = (pressedButton * 10 - 10); i < pressedButton * 10; i++) {
+                Post post = new Post();
+                post = session.get(Post.class, idPostAllFollowing.get(i).longValue());
+                listPostForOnePage.add(post);
+            }
+        } else  {
+            for (int i = (pressedButton * 10 - 10); i < countPosts; i++) {
+                Post post = new Post();
+                post = session.get(Post.class, idPostAllFollowing.get(i).longValue());
+                listPostForOnePage.add(post);
+            }
+        }
+        session.close();
+        return listPostForOnePage;
+    }
+
+    @Override
+    public List<Post> getFirstTenFollowingPost(User user) {
+        Session session = sessionFactory.openSession();
+        List<Post> listPost = new ArrayList<>();
+        List<BigInteger> listIdPosts = getListIdPosts(user);
+        for (int i = 0; i < listIdPosts.size(); i++) {
+            Post post = new Post();
+            post = session.get(Post.class, listIdPosts.get(i).longValue());
+            listPost.add(post);
+            if (i==9) break;
+        }
+        session.close();
+        return listPost;
+    }
 }
+

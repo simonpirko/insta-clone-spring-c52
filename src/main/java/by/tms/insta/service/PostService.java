@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -88,5 +89,56 @@ public class PostService {
 
     public List<Comment> findCommentsByPost(Post post){
         return postStorage.findCommentsByPost(post);
+    }
+
+    public int getCountPosts(User user) {
+        return postStorage.getCountPosts(user);
+    }
+
+    public List<Integer> getButtonForFirstEnter(User user) {
+        List<Integer> listButton = new ArrayList<>();
+        int countPosts = getCountPosts(user);
+        int countButton = 0;
+        if (countPosts < 11) return null;
+        if ((countPosts % 10) == 0) countButton = countPosts / 10;
+        else countButton = countPosts / 10 + 1;
+        for (int i = 1; i <= countButton; i++) {
+            listButton.add(i);
+            if (i == 5) break;
+        }
+        return listButton;
+    }
+
+    public List<Integer> getButtonForNotFirstEnter(User user, int pressedButton) {
+        List<Integer> listButton = new ArrayList<>();
+        int countPosts = getCountPosts(user);
+        int countButton = 0;
+        if (countPosts < 11) return null;
+        if ((countPosts % 10) == 0) countButton = countPosts / 10;
+        else countButton = countPosts / 10 + 1;
+
+        if ((countButton < 6) || (pressedButton < 3)) {
+            for (int i = 1; i <= countButton; i++) {
+                listButton.add(i);
+                if (i == 5) break;
+            }
+        } else if ((countButton - pressedButton) >= 2) {
+            for (int i = (pressedButton - 2); i <= (pressedButton + 2); i++) {
+                listButton.add(i);
+            }
+        } else {
+            for (int i = (countButton - 4); i <= countButton; i++) {
+                listButton.add(i);
+            }
+        }
+        return listButton;
+    }
+
+    public List<Post> getPostListForOnePage(User user, int pressedButton) {
+        return postStorage.getPostListForOnePage(user,pressedButton);
+    }
+
+    public List<Post> getFirstTenFollowingPost(User user) {
+        return postStorage.getFirstTenFollowingPost(user);
     }
 }
