@@ -31,8 +31,8 @@ public class UserService {
         return userStorage.save(user);
     }
 
-    public User findUserByLogin(User user) {
-        return userStorage.findUserByLogin(user.getLogin());
+    public User findUserByLogin(String login) {
+        return userStorage.findUserByLogin(login);
     }
 
     public List<User> findAll() {
@@ -47,7 +47,7 @@ public class UserService {
         if (!userStorage.userExists(user.getLogin())) {
             return false;
         }
-        User userByLogin = findUserByLogin(user);
+        User userByLogin = findUserByLogin(user.getLogin());
         return userByLogin.getPassword().equals(user.getPassword());
     }
 

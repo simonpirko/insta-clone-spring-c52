@@ -1,5 +1,6 @@
 package by.tms.insta.dao;
 
+import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
 
 import javax.servlet.http.HttpServletRequest;

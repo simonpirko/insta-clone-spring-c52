@@ -1,6 +1,7 @@
 package by.tms.insta.service;
 
 import by.tms.insta.dao.PostStorage;
+import by.tms.insta.dao.UserStorage;
 import by.tms.insta.entity.Comment;
 import by.tms.insta.entity.Like;
 import by.tms.insta.entity.Post;
@@ -25,6 +26,7 @@ public class PostService {
     public boolean savePost(Post post){
         return postStorage.savePost(post);
     }
+
 
     public boolean deletePost(Post post){
         if (postStorage.postExists(post.getUser())){

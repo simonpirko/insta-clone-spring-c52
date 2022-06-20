@@ -1,4 +1,5 @@
 package by.tms.insta.controller;
+
 import by.tms.insta.entity.User;
 import by.tms.insta.service.UserService;
 import by.tms.insta.validators.UserDataValidator;
@@ -35,17 +36,17 @@ public class RegController {
     public String reg(@Valid User user, BindingResult bindingResult,
                       Model model) {
         model.addAttribute(user);
-        if (userDataValidator.hasRegError(bindingResult,user)) {
-            model.addAttribute("messages", userDataValidator.listErrorForReg(bindingResult, user));
-            return "sign-up";
+//        if (userDataValidator.hasRegError(bindingResult,user)) {
+//            model.addAttribute("messages", userDataValidator.listErrorForReg(bindingResult, user));
+//            return "sign-up";
+//        } else {
+        if (userService.save(user)) {
+            model.addAttribute("user", user);
+            return "sign-in";
         } else {
-            if (userService.save(user)) {
-                model.addAttribute("user", user);
-                return "sign-in";
-            } else {
-                model.addAttribute("message", USER_EXISTS);
-                return "sign-up";
-            }
+            model.addAttribute("message", USER_EXISTS);
+            return "sign-up";
         }
     }
 }
+
