@@ -34,6 +34,8 @@ public interface UserStorage {
 
     boolean userExists(String login);
 
+    boolean userExistsByName(String name);
+
     void addFollower(User userFollower, User user);
 
     void update(String login, User newUser,

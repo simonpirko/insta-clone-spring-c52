@@ -47,6 +47,10 @@ public class UserService {
         return userStorage.userExists(login);
     }
 
+    public boolean userExistsByName(String name) {
+        return userStorage.userExistsByName(name);
+    }
+
     public boolean authUserByLoginAndPass(User user) {
         if (!userStorage.userExists(user.getLogin())) {
             return false;

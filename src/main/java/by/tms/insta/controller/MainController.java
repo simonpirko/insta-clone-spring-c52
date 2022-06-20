@@ -43,8 +43,8 @@ public class MainController {
 
     @PostMapping
     public String searchByName(String name, Model model) {
-        User user = userService.findUserByName(name);
-        if (userService.userExists(user.getLogin())) {
+        if (userService.userExistsByName(name)) {
+            User user = userService.findUserByName(name);
             model.addAttribute("user", user);
             return "user-info";
         } else {

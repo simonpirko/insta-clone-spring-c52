@@ -79,6 +79,17 @@ public class HibernateUserStorage implements UserStorage {
         return totalUsers > 0;
     }
 
+    @Override
+    @Transactional
+    public boolean userExistsByName(String name) {
+        Session session = sessionFactory.openSession();
+        Long totalUsers = (Long) session
+                .createQuery("SELECT COUNT(*) FROM User WHERE name = :name")
+                .setParameter("name", name)
+                .getSingleResult();
+        session.close();
+        return totalUsers > 0;
+    }
 
     @Override
     @Transactional
