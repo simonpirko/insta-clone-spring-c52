@@ -44,6 +44,17 @@ public class HibernateUserStorage implements UserStorage {
         return userByLogin;
     }
 
+    @Override
+    @Transactional
+    public User findUserByName(String name) {
+        Session session = sessionFactory.openSession();
+        User userByName = session
+                .createQuery("from User where name = :name", User.class)
+                .setParameter("name", name)
+                .getSingleResult();
+        session.close();
+        return userByName;
+    }
 
     @Override
     @Transactional

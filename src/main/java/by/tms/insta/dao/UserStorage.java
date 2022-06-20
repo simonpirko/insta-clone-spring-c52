@@ -21,6 +21,13 @@ public interface UserStorage {
     User findUserByLogin(String login);
 
     /**
+     * @param name the name
+     * @return the user
+     */
+
+    User findUserByName(String name);
+
+    /**
      * @return users list
      */
     List<User> findAll();

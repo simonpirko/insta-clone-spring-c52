@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+    private static final String USER_DOES_NOT_EXIST = "User with this name does not exist.";
 
     @Autowired
     private UserService userService;
@@ -36,5 +39,17 @@ public class MainController {
         model.addAttribute("posts", postFollowings);
         model.addAttribute("imgUtil", imageUtil);
         return "index";
+    }
+
+    @PostMapping
+    public String searchByName(String name, Model model) {
+        User user = userService.findUserByName(name);
+        if (userService.userExists(user.getLogin())) {
+            model.addAttribute("user", user);
+            return "user-info";
+        } else {
+            model.addAttribute("message", USER_DOES_NOT_EXIST);
+            return "index";
+        }
     }
 }
