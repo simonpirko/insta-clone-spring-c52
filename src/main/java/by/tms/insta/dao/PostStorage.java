@@ -5,6 +5,7 @@ import by.tms.insta.entity.Like;
 import by.tms.insta.entity.Post;
 import by.tms.insta.entity.User;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface PostStorage {
@@ -42,4 +43,12 @@ public interface PostStorage {
     List<Comment> findCommentsByUser(User user);
 
     List<Comment> findCommentsByPost(Post post);
+
+    List<BigInteger> getListIdPosts(User user);
+
+    int getCountPosts(User user);
+
+    List<Post> getPostListForOnePage(User user, int pressedButton);
+
+    List<Post> getFirstTenFollowingPost(User user);
 }
