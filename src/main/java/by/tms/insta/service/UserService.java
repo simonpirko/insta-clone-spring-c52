@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Component
@@ -59,7 +58,7 @@ public class UserService {
         return userByLogin.getPassword().equals(user.getPassword());
     }
 
-    public void update(String login, User newUser,  HttpServletRequest request,
+    public void update(String login, User newUser, HttpServletRequest request,
                        HttpServletResponse response) {
         userStorage.update(login, newUser, request, response);
     }
@@ -72,11 +71,11 @@ public class UserService {
         userStorage.deleteFollower(userFollower, user);
     }
 
-    public List <Follower> getFollowings (User user) {
+    public List<Follower> getFollowings(User user) {
         return userStorage.findUserByLogin(user.getLogin()).getFollowing();
     }
 
-    public List <Follower> getFollowers (User user) {
+    public List<Follower> getFollowers(User user) {
         return userStorage.findUserByLogin(user.getLogin()).getFollowers();
     }
 }

@@ -44,4 +44,3 @@ public interface UserStorage {
     void deleteFollower(User userFollower, User user);
 
 }
-

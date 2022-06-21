@@ -16,9 +16,6 @@ import java.util.List;
 @Repository
 public class HibernateUserStorage implements UserStorage {
 
-//    @Autowired
-//    HttpSession httpSession;
-
     @Autowired
     private SessionFactory sessionFactory;
 
