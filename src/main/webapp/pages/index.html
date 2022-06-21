@@ -19,7 +19,7 @@
         <div class="search-box">
             <form method="post">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="search" placeholder="Search">
+                <input type="search" name="name" placeholder="Search">
             </form>
         </div>
         <p th:if="!${#strings.isEmpty(message)}" th:text="${message}"></p>
