@@ -1,7 +1,6 @@
 package by.tms.insta.service;
 
 import by.tms.insta.dao.PostStorage;
-import by.tms.insta.dao.UserStorage;
 import by.tms.insta.entity.Comment;
 import by.tms.insta.entity.Like;
 import by.tms.insta.entity.Post;
@@ -23,72 +22,71 @@ public class PostService {
     }
 
     @Transactional
-    public boolean savePost(Post post){
+    public boolean savePost(Post post) {
         return postStorage.savePost(post);
     }
 
-
-    public boolean deletePost(Post post){
-        if (postStorage.postExists(post.getUser())){
+    public boolean deletePost(Post post) {
+        if (postStorage.postExists(post.getUser())) {
             return postStorage.deletePost(post);
         }
         return false;
     }
 
-    public List<Post> findAllPosts(){
+    public List<Post> findAllPosts() {
         return postStorage.findAllPosts();
     }
 
-    public List<Post> findPostsByUser(User user){
+    public List<Post> findPostsByUser(User user) {
         return postStorage.findPostsByUser(user);
     }
 
-    public boolean saveLike(Like like){
-        if (postStorage.likeExists(like.getUser())){
+    public boolean saveLike(Like like) {
+        if (postStorage.likeExists(like.getUser())) {
             return false;
         }
         return postStorage.saveLike(new Like());
     }
 
-    public boolean deleteLike(Like like){
-        if (postStorage.likeExists(like.getUser())){
+    public boolean deleteLike(Like like) {
+        if (postStorage.likeExists(like.getUser())) {
             return postStorage.deleteLike(like);
         }
         return false;
     }
 
-    public List<Like> findAllLikes(){
+    public List<Like> findAllLikes() {
         return postStorage.findAllLikes();
     }
 
-    public List<Like> findLikesByPost(Post post){
+    public List<Like> findLikesByPost(Post post) {
         return postStorage.findLikesByPost(post);
     }
 
-    public List<Like> findLikesByUser(User user){
+    public List<Like> findLikesByUser(User user) {
         return postStorage.findLikesByUser(user);
     }
 
-    public boolean saveComment(Comment comment){
+    public boolean saveComment(Comment comment) {
         return postStorage.saveComment(comment);
     }
 
-    public boolean deleteComment(Comment comment){
-        if (postStorage.commentExists(comment.getUser())){
+    public boolean deleteComment(Comment comment) {
+        if (postStorage.commentExists(comment.getUser())) {
             return postStorage.deleteComment(comment);
         }
         return false;
     }
 
-    public List<Comment> findAllComments(){
+    public List<Comment> findAllComments() {
         return postStorage.findAllComments();
     }
 
-    public List<Comment> findCommentsByUser(User user){
+    public List<Comment> findCommentsByUser(User user) {
         return postStorage.findCommentsByUser(user);
     }
 
-    public List<Comment> findCommentsByPost(Post post){
+    public List<Comment> findCommentsByPost(Post post) {
         return postStorage.findCommentsByPost(post);
     }
 }

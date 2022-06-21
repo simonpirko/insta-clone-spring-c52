@@ -7,19 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/auth")
@@ -31,7 +26,6 @@ public class AuthController {
 
     private static final String PASSWORD_DO_NOT_EXIST = "Sorry, you entered the wrong password." +
             "Check your password again.";
-
 
     @Autowired
     UserService userservice;
@@ -50,13 +44,14 @@ public class AuthController {
         model.addAttribute(user);
 
         if (userDataValidator.hasAuthError(bindingResult)) {
-            model.addAttribute("messages", userDataValidator.listErrorForAuth( bindingResult));
+            model.addAttribute("messages", userDataValidator.listErrorForAuth(bindingResult));
             return "sign-in";
         } else {
             if (userservice.authUserByLoginAndPass(user)) {
-                user = userservice.findUserByLogin(user.getLogin());
+                user = userservice.findUserByLogin(user);
                 model.addAttribute(user);
                 request.getSession().setAttribute("user", user);
+//                httpSession.setAttribute("user", user);
                 response.sendRedirect(request.getContextPath() + "/");
             } else if (userservice.userExists(user.getLogin())) {
                 model.addAttribute("message", PASSWORD_DO_NOT_EXIST);
@@ -69,5 +64,3 @@ public class AuthController {
         return "sign-in";
     }
 }
-
-

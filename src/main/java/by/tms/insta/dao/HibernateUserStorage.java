@@ -16,9 +16,6 @@ import java.util.List;
 @Repository
 public class HibernateUserStorage implements UserStorage {
 
-//    @Autowired
-//    HttpSession httpSession;
-
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -44,6 +41,17 @@ public class HibernateUserStorage implements UserStorage {
         return userByLogin;
     }
 
+    @Override
+    @Transactional
+    public User findUserByName(String name) {
+        Session session = sessionFactory.openSession();
+        User userByName = session
+                .createQuery("from User where name = :name", User.class)
+                .setParameter("name", name)
+                .getSingleResult();
+        session.close();
+        return userByName;
+    }
 
     @Override
     @Transactional
@@ -68,6 +76,17 @@ public class HibernateUserStorage implements UserStorage {
         return totalUsers > 0;
     }
 
+    @Override
+    @Transactional
+    public boolean userExistsByName(String name) {
+        Session session = sessionFactory.openSession();
+        Long totalUsers = (Long) session
+                .createQuery("SELECT COUNT(*) FROM User WHERE name = :name")
+                .setParameter("name", name)
+                .getSingleResult();
+        session.close();
+        return totalUsers > 0;
+    }
 
     @Override
     @Transactional

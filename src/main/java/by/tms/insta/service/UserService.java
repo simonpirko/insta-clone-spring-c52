@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Component
@@ -31,8 +30,12 @@ public class UserService {
         return userStorage.save(user);
     }
 
-    public User findUserByLogin(String login) {
-        return userStorage.findUserByLogin(login);
+    public User findUserByLogin(User user) {
+        return userStorage.findUserByLogin(user.getLogin());
+    }
+
+    public User findUserByName(String name) {
+        return userStorage.findUserByName(name);
     }
 
     public List<User> findAll() {
@@ -43,15 +46,19 @@ public class UserService {
         return userStorage.userExists(login);
     }
 
+    public boolean userExistsByName(String name) {
+        return userStorage.userExistsByName(name);
+    }
+
     public boolean authUserByLoginAndPass(User user) {
         if (!userStorage.userExists(user.getLogin())) {
             return false;
         }
-        User userByLogin = findUserByLogin(user.getLogin());
+        User userByLogin = findUserByLogin(user);
         return userByLogin.getPassword().equals(user.getPassword());
     }
 
-    public void update(String login, User newUser,  HttpServletRequest request,
+    public void update(String login, User newUser, HttpServletRequest request,
                        HttpServletResponse response) {
         userStorage.update(login, newUser, request, response);
     }
@@ -64,11 +71,11 @@ public class UserService {
         userStorage.deleteFollower(userFollower, user);
     }
 
-    public List <Follower> getFollowings (User user) {
+    public List<Follower> getFollowings(User user) {
         return userStorage.findUserByLogin(user.getLogin()).getFollowing();
     }
 
-    public List <Follower> getFollowers (User user) {
+    public List<Follower> getFollowers(User user) {
         return userStorage.findUserByLogin(user.getLogin()).getFollowers();
     }
 }

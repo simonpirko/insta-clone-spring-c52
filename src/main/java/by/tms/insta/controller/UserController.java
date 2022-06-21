@@ -34,10 +34,10 @@ public class UserController {
     private ImageUtil imageUtil;
 
     @GetMapping
-    public String getUser(Model model){
-        String login=((User) httpSession.getAttribute("user")).getLogin();
-        User user=userService.findUserByLogin(login);
-        model.addAttribute("user",user);
+    public String getUser(Model model) {
+        User userFromModel = ((User) httpSession.getAttribute("user"));
+        User user = userService.findUserByLogin(userFromModel);
+        model.addAttribute("user", user);
         List<Post> postFollowings = postService.findAllPosts();
         model.addAttribute("posts", postFollowings);
         model.addAttribute("imgUtil", imageUtil);
@@ -46,8 +46,8 @@ public class UserController {
 
     @PostMapping(consumes = "multipart/form-data")
     public String savePostUser(@RequestParam(value = "image") MultipartFile image,
-                           String description,
-                           HttpServletRequest request) {
+                               String description,
+                               HttpServletRequest request) {
         Post myPost = new Post();
         try {
             myPost.setImage(image.getBytes());
