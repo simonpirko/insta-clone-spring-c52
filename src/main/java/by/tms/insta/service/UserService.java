@@ -35,12 +35,20 @@ public class UserService {
         return userStorage.findUserByLogin(user.getLogin());
     }
 
+    public User findUserByName(String name) {
+        return userStorage.findUserByName(name);
+    }
+
     public List<User> findAll() {
         return userStorage.findAll();
     }
 
     public boolean userExists(String login) {
         return userStorage.userExists(login);
+    }
+
+    public boolean userExistsByName(String name) {
+        return userStorage.userExistsByName(name);
     }
 
     public boolean authUserByLoginAndPass(User user) {
